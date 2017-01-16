@@ -4,7 +4,7 @@ using System.Collections;
 public class Paddle : MonoBehaviour {
 
   #region Mono Behaviour
- 
+
   void OnEnable() {
     EventManager.StartListening("MovePaddleLeft", MoveLeft);
     EventManager.StartListening("MovePaddleRight", MoveRight);

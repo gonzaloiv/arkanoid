@@ -5,23 +5,23 @@ public class InputManager : MonoBehaviour {
 
   #region Fields
 
-  Vector3 lastMouseCoordinate;
+  Vector3 lastCoordinate;
 
   #endregion
 
   #region Mono Behaviour
 
   void Start() {
-    lastMouseCoordinate = Input.mousePosition;
+    lastCoordinate = Input.mousePosition;
   }
 
   void Update() {   
-    if (Input.mousePosition.x < lastMouseCoordinate.x)
+    if (Input.mousePosition.x < lastCoordinate.x)
       EventManager.TriggerEvent("MovePaddleLeft");
-    if (Input.mousePosition.x > lastMouseCoordinate.x)
+    if (Input.mousePosition.x > lastCoordinate.x)
       EventManager.TriggerEvent("MovePaddleRight");
 
-    lastMouseCoordinate = Input.mousePosition;
+    lastCoordinate = Input.mousePosition;
   }
 
   #endregion
