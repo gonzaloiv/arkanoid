@@ -26,8 +26,9 @@ public class Ball : MonoBehaviour {
 	}
 
   void FixedUpdate() {
-    if(rigidBody.velocity.x < Config.BallMaxVelocity.x && rigidBody.velocity.z < Config.BallMaxVelocity.z)
-      rigidBody.AddForce(direction * Config.BallInitialVelocity, ForceMode.Force);
+//    if(rigidBody.velocity.x < Config.BallMaxVelocity.x && rigidBody.velocity.z < Config.BallMaxVelocity.z)
+//      rigidBody.AddForce(direction * Config.BallInitialVelocity, ForceMode.Force);
+      rigidBody.velocity = direction * Config.BallInitialVelocity;
   }
 
   void OnCollisionEnter(Collision collision) {
