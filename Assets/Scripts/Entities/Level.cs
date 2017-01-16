@@ -3,22 +3,29 @@ using System.Collections;
 
 public class Level : MonoBehaviour {
 
-  [SerializeField] GameObject boardPrefab;
+  #region Fields
+
+	[SerializeField] GameObject boardPrefab;
 	[SerializeField] GameObject ballPrefab;
-  [SerializeField] GameObject paddlePrefab;
+	[SerializeField] GameObject paddlePrefab;
+
+  private GameObject board;
+  private GameObject ball;
+  private GameObject paddle;
+
+  #endregion
 
 	#region Mono Behaviour
 
 	void Awake() {
-    Instantiate(boardPrefab);
-    Instantiate(ballPrefab);
-    Instantiate(paddlePrefab);
+    board = Instantiate(boardPrefab) as GameObject;
+    board.transform.parent = transform;
+    ball = Instantiate(ballPrefab) as GameObject;
+    ball.transform.parent = transform;
+    paddle = Instantiate(paddlePrefab) as GameObject;
+    paddle.transform.parent = transform;
 	}
-
-	void Start () {
-		Debug.Log("Start!");
-	}
-
+  
 	#endregion
 
 }
