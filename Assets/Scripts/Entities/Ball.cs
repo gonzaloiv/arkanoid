@@ -22,16 +22,15 @@ public class Ball : MonoBehaviour {
 	}
 	
 	void Start () {
-    direction = Helper.GetRandomDirection();
+    direction = Util.GetRandomBallDirection();
 	}
 
   void FixedUpdate() {
     if(rigidBody.velocity.x < Config.BallMaxVelocity.x && rigidBody.velocity.z < Config.BallMaxVelocity.z)
-      rigidBody.AddForce(direction * Config.BallInitialForce, ForceMode.Force);
+      rigidBody.AddForce(direction * Config.BallInitialVelocity, ForceMode.Force);
   }
 
   void OnCollisionEnter(Collision collision) {
-    Debug.Log(collision.gameObject);
     if(collision.gameObject.name != "Ground")
       direction = Vector3.Reflect(direction, collision.contacts[0].normal);
   }
