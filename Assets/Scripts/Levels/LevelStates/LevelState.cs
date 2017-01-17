@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelState : State {
+public abstract class LevelState : State {
 
   #region Fields
+
+  public Level Level { get { return level; } }
 
   private Level level;
 

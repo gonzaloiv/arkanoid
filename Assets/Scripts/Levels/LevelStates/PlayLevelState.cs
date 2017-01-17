@@ -7,56 +7,50 @@ public class PlayLevelState : LevelState {
 
   #region Fields
 
-  private PiecePool piecePool;
+  [SerializeField] GameObject ballPrefab;
+
   private List<GameObject> levelPieces;
+  private GameObject ball;
 
   #endregion
 
-
-  #region Mono Behaviour
-
-  protected override void Awake() {
-    piecePool = GetComponent<PiecePool>();
-    levelPieces = new List<GameObject>();
-  }
-
-  void Update() {
-    if(CheckLevelEnd())
-//      Debug.Log("End Game Please!");
-     EventManager.TriggerEvent("EndLevel");
-  }
-
-  #endregion
-
-  #region Public Behaviour
+  #region State Behaviour
 
   public override void Enter() {
     base.Enter();
 
-    GenerateNewLevel();
+    levelPieces = new List<GameObject>();
+    levelPieces = LevelMaker.Instance.GenerateNewLevel();
+    ball = Utils.InstantiateAsChild(ballPrefab, transform);
+  }
+
+  public override void Exit() {
+    base.Enter();
+
+    foreach(GameObject piece in levelPieces)
+      piece.SetActive(false);
+
+    Destroy(ball);
+  }
+
+  protected override void AddListeners() {
+    EventManager.StartListening("PieceHit", CheckLevelEnd);
+  }
+
+  protected override void RemoveListeners() {
+    EventManager.StopListening("PieceHit", CheckLevelEnd);
   }
 
   #endregion
 
   #region Private Behaviour
 
-  private void GenerateNewLevel() {
-  // for testing purposes
-    for (int i = 0; i < Levels.TestLevel.Length; i++) {
-      GameObject piece = piecePool.PopPiece();
-      piece.transform.Translate(Levels.TestLevel[i][0], 0, Levels.TestLevel[i][1]);
-      piece.SetActive(true);
-      levelPieces.Add(piece);
-    }
-  }
-
-  // TODO: esto tiene que se mediante eventos
-  private bool CheckLevelEnd(){
+  private void CheckLevelEnd(){
     foreach(GameObject piece in levelPieces) {
       if(piece.activeInHierarchy)
-        return false;
+        return;
     }
-    return true;
+    EventManager.TriggerEvent("EndLevel");
   }
 
   #endregion

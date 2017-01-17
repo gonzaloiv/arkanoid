@@ -9,7 +9,13 @@ public class Piece : MonoBehaviour {
 
   void OnCollisionEnter(Collision collision) {
     gameObject.SetActive(false);
+    EventManager.TriggerEvent("PieceHit");
   }
+
+  #endregion
+
+  #region Private Behaviour
+
 
   #endregion
 

@@ -7,7 +7,6 @@ public class Ball : MonoBehaviour {
 
   #region Fields
 
-  private SphereCollider sphereCollider;
   private Rigidbody rigidBody;
 
   private Vector3 direction;
@@ -17,12 +16,11 @@ public class Ball : MonoBehaviour {
   #region Mono Behaviour
 
   void Awake() {
-    sphereCollider = GetComponent<SphereCollider>();
-    rigidBody = GetComponent<Rigidbody>();
+    rigidBody = GetComponent<Rigidbody>(); 
   }
 
   void Start() {
-    direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(.3f, .6f));
+    direction = Config.BallInitialDirection;
   }
 
   void FixedUpdate() {

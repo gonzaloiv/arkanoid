@@ -9,7 +9,7 @@ public class PiecePool : MonoBehaviour {
   [SerializeField] GameObject piecePrefab;
 
   private List<GameObject> pieces = new List<GameObject>();
-  private GameObject poolObject;
+  private GameObject piecePool;
 
   #endregion
 
@@ -17,9 +17,8 @@ public class PiecePool : MonoBehaviour {
   #region Mono Behaviour
 
   void Awake() {
-    poolObject = new GameObject("PiecePool");
-    poolObject.transform.SetParent(transform);
-    for(int i = 0; i < Config.InitialPieceAmount; i++){ 
+    piecePool = Utils.InstantiateAsChild("PiecePool", transform);
+    for(int i = 0; i < Config.InitialPiecePoolAmount; i++){ 
       PushPiece();
     }
   }
@@ -41,9 +40,7 @@ public class PiecePool : MonoBehaviour {
   #region Private Behaviour
 
   private GameObject PushPiece() {
-    GameObject piece = Instantiate(piecePrefab) as GameObject;
-    piece.SetActive(false);
-    piece.transform.parent = poolObject.transform;
+    GameObject piece = Utils.InstantiateAsChild(piecePrefab, piecePool.transform, false);
     pieces.Add(piece);
     return piece;
   }

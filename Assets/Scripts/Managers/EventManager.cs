@@ -10,6 +10,10 @@ public class EventManager : MonoBehaviour {
   private Dictionary <string, UnityEvent> eventDictionary;
   private static EventManager eventManager;
 
+  #endregion
+
+  #region Singleton Pattern
+
   public static EventManager Instance {
     get {
       if (!eventManager) {

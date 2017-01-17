@@ -3,7 +3,11 @@ using System.Collections;
 
 public class Game : MonoBehaviour {
 
+  #region Mono Behaviour
+
   [SerializeField] GameObject levelPrefab;
+
+  #endregion
 
   #region Mono Behaviour
 
