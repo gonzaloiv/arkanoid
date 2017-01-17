@@ -6,7 +6,7 @@ public class Config {
   public const int BoardWidth = 30;
   public const int BoardHeight = 40;
 
-  public const float BallInitialVelocity = 40f;
+  public const float BallInitialVelocity = 60f;
 
   public const float PaddleVelocity = 1.5f;
 
