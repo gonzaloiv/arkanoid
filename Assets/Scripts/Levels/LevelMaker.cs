@@ -31,7 +31,7 @@ public class LevelMaker : MonoBehaviour {
 
   #endregion
 
-  #region Public Behaviour
+  #region Mono Behaviour
 
   void Awake() {
     piecePool = GetComponent<PiecePool>();
@@ -83,27 +83,27 @@ public class LevelMaker : MonoBehaviour {
 
   private Vector3 GetSpawnPiecePosition() {
     Vector3 position = RandomBoardPosition();
-      float startTime = Time.realtimeSinceStartup;
-      while (!IsEmptyPosition(position)) {
-        position = RandomBoardPosition();
-        // TODO: mirar como mejorar esto
-        if (Time.realtimeSinceStartup - startTime > 0.001f) {
-          return Vector3.zero;
-        }
+    float startTime = Time.realtimeSinceStartup;
+    while (!IsEmptyPosition(position)) {
+      position = RandomBoardPosition();
+      // TODO: mirar como mejorar esto
+      if (Time.realtimeSinceStartup - startTime > 0.001f) {
+        return Vector3.zero;
       }
+    }
+    return position;
+  }
+
+  private Vector3 RandomBoardPosition() {
+    Vector3 position = new Vector3();
+    position.x = Config.SpawnPieceGridOrigin.x + Random.Range(0, Config.HorizontalMaxPieces / 2) * Config.PieceSize.x;
+    position.z = Config.SpawnPieceGridOrigin.z + Random.Range(0, Config.VerticalMaxPieces) * Config.PieceSize.z;
+    
     return position;
   }
 
   private bool IsEmptyPosition(Vector3 position) {
     return !Physics.CheckBox(position, Config.PieceSize / 2);
-  }
-
-  private Vector3 RandomBoardPosition() {
-    Vector3 position = new Vector3();
-    position.x = Config.SpawnPieceGridOrigin.x + Random.Range(0, Config.HorizontalMaxPieces) * Config.PieceSize.x;
-    position.z = Config.SpawnPieceGridOrigin.z + Random.Range(0, Config.VerticalMaxPieces) * Config.PieceSize.z;
-
-    return position;
   }
 
   #endregion

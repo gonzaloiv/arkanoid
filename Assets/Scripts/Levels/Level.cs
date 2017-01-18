@@ -10,12 +10,12 @@ public class Level : StateMachine {
   [SerializeField] GameObject boardPrefab;
   [SerializeField] GameObject paddlePrefab;
 
+
   private GameObject board;
   private GameObject paddle;
 
   public int LevelNumber { get { return levelNumber; } }
-
-  [HideInInspector] private int levelNumber = 1;
+  private int levelNumber = 1;
 
   #endregion
 
@@ -27,7 +27,7 @@ public class Level : StateMachine {
   }
 
   void Start() {
-    ChangeState<PlayLevelState>();
+    ChangeState<NextLevelState>();
   }
 
   void OnEnable() {

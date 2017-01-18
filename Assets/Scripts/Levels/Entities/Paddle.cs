@@ -6,6 +6,7 @@ public class Paddle : MonoBehaviour {
   #region Mono Behaviour
 
   private float boardConstraints { get { return Config.BoardWidth / 2 - transform.localScale.x / 1.5f; } }
+  private int lives = Config.InitialPaddleLives;
 
   #endregion
 
@@ -14,11 +15,13 @@ public class Paddle : MonoBehaviour {
   void OnEnable() {
     EventManager.StartListening("MovePaddleLeft", MoveLeft);
     EventManager.StartListening("MovePaddleRight", MoveRight);
+    EventManager.StartListening("PaddleMiss", LoseOneLife);
   }
 
   void OnDisable() {
     EventManager.StopListening("MovePaddleLeft", MoveLeft);
     EventManager.StopListening("MovePaddleRight", MoveRight);
+    EventManager.StopListening("PaddleMiss", LoseOneLife);
   }
 
   #endregion
@@ -33,6 +36,12 @@ public class Paddle : MonoBehaviour {
   private void MoveRight() {
     if (transform.position.x <= boardConstraints)
       transform.Translate(Config.PaddleVelocity, 0, 0);
+  }
+
+  private void LoseOneLife() {
+    lives--;
+    if(lives <= 0)
+      EventManager.TriggerEvent("GameOver");
   }
 
   #endregion

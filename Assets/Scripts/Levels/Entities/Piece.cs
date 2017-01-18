@@ -13,10 +13,4 @@ public class Piece : MonoBehaviour {
   }
 
   #endregion
-
-  #region Private Behaviour
-
-
-  #endregion
-
 }

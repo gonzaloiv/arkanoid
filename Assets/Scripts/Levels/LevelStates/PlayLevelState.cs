@@ -8,29 +8,39 @@ public class PlayLevelState : LevelState {
   #region Fields
 
   [SerializeField] GameObject ballPrefab;
+  [SerializeField] GameObject levelHUDPrefab;
+
+  private GameObject ball;
+  private GameObject levelHUD;
 
   private List<GameObject> levelPieces;
-  private GameObject ball;
 
   #endregion
 
   #region State Behaviour
 
+  void Awake() {
+    ball = Utils.InstantiateAsChild(ballPrefab, transform, false);
+    levelHUD = Utils.InstantiateAsChild(levelHUDPrefab, transform, false);
+    levelPieces = new List<GameObject>();
+  }
+
   public override void Enter() {
     base.Enter();
 
-    levelPieces = new List<GameObject>();
     levelPieces = LevelMaker.Instance.GenerateNewLevel();
-    ball = Utils.InstantiateAsChild(ballPrefab, transform);
+    ball.SetActive(true);
+    levelHUD.SetActive(true);
   }
 
   public override void Exit() {
     base.Enter();
 
-    foreach(GameObject piece in levelPieces)
+    foreach (GameObject piece in levelPieces)
       piece.SetActive(false);
 
-    Destroy(ball);
+    ball.SetActive(false);
+    levelHUD.SetActive(false);
   }
 
   protected override void AddListeners() {
@@ -45,9 +55,9 @@ public class PlayLevelState : LevelState {
 
   #region Private Behaviour
 
-  private void CheckLevelEnd(){
-    foreach(GameObject piece in levelPieces) {
-      if(piece.activeInHierarchy)
+  private void CheckLevelEnd() {
+    foreach (GameObject piece in levelPieces) {
+      if (piece.activeInHierarchy)
         return;
     }
     EventManager.TriggerEvent("EndLevel");
