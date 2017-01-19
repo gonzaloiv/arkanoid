@@ -13,15 +13,15 @@ public class Paddle : MonoBehaviour {
   #region Mono Behaviour
 
   void OnEnable() {
-    EventManager.StartListening("MovePaddleLeft", MoveLeft);
-    EventManager.StartListening("MovePaddleRight", MoveRight);
-    EventManager.StartListening("PaddleMiss", LoseOneLife);
+    EventManager.Instance.StartListening<MovePaddleLeft>(MoveLeft);
+    EventManager.Instance.StartListening<MovePaddleRight>(MoveRight);
+    EventManager.Instance.StartListening<PaddleMiss>(LoseOneLife);
   }
 
   void OnDisable() {
-    EventManager.StopListening("MovePaddleLeft", MoveLeft);
-    EventManager.StopListening("MovePaddleRight", MoveRight);
-    EventManager.StopListening("PaddleMiss", LoseOneLife);
+    EventManager.Instance.StopListening<MovePaddleLeft>(MoveLeft);
+    EventManager.Instance.StopListening<MovePaddleRight>(MoveRight);
+    EventManager.Instance.StopListening<PaddleMiss>(LoseOneLife);
   }
 
   #endregion
@@ -41,7 +41,7 @@ public class Paddle : MonoBehaviour {
   private void LoseOneLife() {
     lives--;
     if(lives <= 0)
-      EventManager.TriggerEvent("GameOver");
+      EventManager.Instance.TriggerEvent(new GameOver());
   }
 
   #endregion

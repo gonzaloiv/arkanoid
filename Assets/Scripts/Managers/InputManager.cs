@@ -18,10 +18,10 @@ public class InputManager : MonoBehaviour {
   void Update() {   
 
     if (Input.mousePosition.x < lastCoordinate.x)
-      EventManager.TriggerEvent("MovePaddleLeft");
+      EventManager.Instance.TriggerEvent(new MovePaddleLeft());
 
     if (Input.mousePosition.x > lastCoordinate.x)
-      EventManager.TriggerEvent("MovePaddleRight");
+      EventManager.Instance.TriggerEvent(new MovePaddleRight());
 
     lastCoordinate = Input.mousePosition;
   }

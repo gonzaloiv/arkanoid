@@ -31,13 +31,13 @@ public class Level : StateMachine {
   }
 
   void OnEnable() {
-    EventManager.StartListening("NextLevel", ToPlayLevelState);
-    EventManager.StartListening("EndLevel", ToNextLevelState);
+    EventManager.Instance.StartListening<NextLevel>(ToPlayLevelState);
+    EventManager.Instance.StartListening<EndLevel>(ToNextLevelState);
   }
 
   void OnDisable() {
-    EventManager.StopListening("NextLevel", ToPlayLevelState);
-    EventManager.StopListening("EndLevel", ToNextLevelState);
+    EventManager.Instance.StopListening<NextLevel>(ToPlayLevelState);
+    EventManager.Instance.StopListening<EndLevel>(ToNextLevelState);
   }
 
   #endregion

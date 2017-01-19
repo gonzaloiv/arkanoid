@@ -28,7 +28,7 @@ public class Ball : MonoBehaviour {
 
   void OnCollisionEnter(Collision collision) {
     if (collision.gameObject.name == "BorderBottom") {
-      EventManager.TriggerEvent("PaddleMiss");
+      EventManager.Instance.TriggerEvent(new PaddleMiss());
       StartCoroutine(Respawn());
     }
     if (collision.gameObject.name != "Ground") { 

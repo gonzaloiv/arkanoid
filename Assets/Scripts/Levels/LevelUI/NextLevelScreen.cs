@@ -8,7 +8,7 @@ public class NextLevelScreen : MonoBehaviour, IPointerClickHandler {
   #region IPointerClickHandler Implementation
 
   public void OnPointerClick(PointerEventData eventData) {
-    EventManager.TriggerEvent("NextLevel");
+    EventManager.Instance.TriggerEvent(new NextLevel());
   }
     
   #endregion

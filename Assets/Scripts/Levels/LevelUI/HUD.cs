@@ -17,11 +17,11 @@ public class HUD : MonoBehaviour {
   }
 
   void OnEnable() {
-    EventManager.StartListening("PaddleMiss", UpdateLivesLabel);
+    EventManager.Instance.StartListening<PaddleMiss>(UpdateLivesLabel);
   }
 
   void OnDisable() {
-    EventManager.StopListening("PaddleMiss", UpdateLivesLabel);
+    EventManager.Instance.StopListening<PaddleMiss>(UpdateLivesLabel);
   }
 
   #endregion

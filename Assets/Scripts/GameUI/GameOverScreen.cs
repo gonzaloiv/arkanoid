@@ -7,7 +7,7 @@ public class GameOverScreen : MonoBehaviour, IPointerClickHandler {
   #region IPointerClickHandler Implementation
 
   public void OnPointerClick(PointerEventData eventData) {    
-    EventManager.TriggerEvent("StartGame");
+    EventManager.Instance.TriggerEvent(new StartGame());
   }
     
   #endregion

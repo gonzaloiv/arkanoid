@@ -13,13 +13,13 @@ public class Game : StateMachine {
   }
 
   void OnEnable() {
-    EventManager.StartListening("StartGame", ToLevelGameState);
-    EventManager.StartListening("GameOver", ToGameOverState);
+    EventManager.Instance.StartListening<StartGame>(ToLevelGameState);
+    EventManager.Instance.StartListening<GameOver>(ToGameOverState);
   }
 
   void OnDisable() {
-    EventManager.StopListening("StartGame", ToLevelGameState);
-    EventManager.StopListening("GameOver", ToGameOverState);
+    EventManager.Instance.StopListening<StartGame>(ToLevelGameState);
+    EventManager.Instance.StopListening<GameOver>(ToGameOverState);
   }
 
   #endregion

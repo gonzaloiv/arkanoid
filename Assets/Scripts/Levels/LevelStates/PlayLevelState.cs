@@ -44,11 +44,11 @@ public class PlayLevelState : LevelState {
   }
 
   protected override void AddListeners() {
-    EventManager.StartListening("PieceHit", CheckLevelEnd);
+    EventManager.Instance.StartListening<PieceHit>(CheckLevelEnd);
   }
 
   protected override void RemoveListeners() {
-    EventManager.StopListening("PieceHit", CheckLevelEnd);
+    EventManager.Instance.StopListening<PieceHit>(CheckLevelEnd);
   }
 
   #endregion
@@ -60,7 +60,7 @@ public class PlayLevelState : LevelState {
       if (piece.activeInHierarchy)
         return;
     }
-    EventManager.TriggerEvent("EndLevel");
+    EventManager.Instance.TriggerEvent(new EndLevel());
   }
 
   #endregion

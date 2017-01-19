@@ -23,7 +23,7 @@ public class LevelMaker : MonoBehaviour {
       if (!levelMaker) {
         levelMaker = FindObjectOfType(typeof(LevelMaker)) as LevelMaker;
         if (!levelMaker)
-          Debug.LogError("There needs to be one active LevelMaker script on a GameObject in your scene.");
+          Debug.LogError("There needs to be one active LevelMaker script on a GameObject in the scene.");
       }
       return levelMaker;
     }
