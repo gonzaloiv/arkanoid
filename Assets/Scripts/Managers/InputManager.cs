@@ -16,8 +16,6 @@ public class InputManager : MonoBehaviour {
   }
 
   void Update() {   
-    if (Input.GetMouseButtonDown(0))
-      EventManager.TriggerEvent("NextLevel");
 
     if (Input.mousePosition.x < lastCoordinate.x)
       EventManager.TriggerEvent("MovePaddleLeft");

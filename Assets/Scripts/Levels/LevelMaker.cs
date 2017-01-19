@@ -56,6 +56,7 @@ public class LevelMaker : MonoBehaviour {
     return levelPieces;
   }
 
+  // Creación de niveles a partir de datos
   public List<GameObject> SetNewLevel() {
     levelPieces = new List<GameObject>();
     for (int i = 0; i < Levels.TestLevel.Length; i++)

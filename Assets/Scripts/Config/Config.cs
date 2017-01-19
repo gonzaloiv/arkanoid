@@ -6,7 +6,7 @@ public class Config {
   public const int BoardWidth = 32; // 8 pieces width
   public const int BoardHeight = 42;
  
-  public const float BallInitialVelocity = 30f;
+  public const float BallInitialVelocity = 35f;
   public static Vector3 BallInitialPosition = new Vector3(0, 0, -16);
   public static Vector3 BallInitialDirection = new Vector3(.5f + Random.Range(-.2f, .2f), 0, 1); 
 
@@ -26,7 +26,7 @@ public class Config {
   public const int HorizontalMaxPieces = 8;
   public const int VerticalMaxPieces = 32;
 
-  public const int MinPieceAmount = 20;
+  public const int MinPieceAmount = 40;
   public const int MaxPieceAmount = 64;
 
 }

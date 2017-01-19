@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class LevelHUD : MonoBehaviour {
+public class HUD : MonoBehaviour {
 
   #region Fields
 
