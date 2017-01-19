@@ -4,28 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-public class EventManager : MonoBehaviour {
+public class EventManager : Singleton<EventManager> {
 
   #region Fields
 
-  private static EventManager eventManager;
   private Dictionary <string, UnityEvent> eventStringDictionary = new Dictionary<string, UnityEvent>();
   private Dictionary <System.Type, UnityEvent> eventTypeDictionary = new Dictionary<System.Type, UnityEvent>();
-
-  #endregion
-
-  #region Singleton Pattern
-
-  public static EventManager Instance {
-    get {
-      if (!eventManager) {
-        eventManager = FindObjectOfType(typeof(EventManager)) as EventManager;
-        if (!eventManager)
-          Debug.LogError("There needs to be one active EventManager script on a GameObject in the scene.");
-      }
-      return eventManager;
-    }
-  }
 
   #endregion
 
@@ -46,7 +30,7 @@ public class EventManager : MonoBehaviour {
   }
 
   public void StopListening(string eventName, UnityAction listener) {
-    if (eventManager == null)
+    if (instance == null)
       return;
     UnityEvent thisEvent = null;
     if (eventStringDictionary.TryGetValue(eventName, out thisEvent))
@@ -72,9 +56,9 @@ public class EventManager : MonoBehaviour {
       eventTypeDictionary.Add(typeof(T), thisEvent);
     }
   }
- 
+
   public void StopListening<T>(UnityAction listener) where T : UnityEvent {
-    if (eventManager == null)
+    if (instance == null)
       return;
     UnityEvent thisEvent = null;
     if (eventTypeDictionary.TryGetValue(typeof(T), out thisEvent))
@@ -84,7 +68,7 @@ public class EventManager : MonoBehaviour {
 
   public void TriggerEvent(UnityEvent e) {
     UnityEvent thisEvent = null;
-    if (eventTypeDictionary.TryGetValue(e.GetType(), out thisEvent)) 
+    if (eventTypeDictionary.TryGetValue(e.GetType(), out thisEvent))
       thisEvent.Invoke();
   }
 

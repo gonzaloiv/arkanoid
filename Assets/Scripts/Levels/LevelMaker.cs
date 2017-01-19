@@ -4,30 +4,14 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(PiecePool))]
 [RequireComponent(typeof(Level))]
-public class LevelMaker : MonoBehaviour {
+public class LevelMaker : Singleton<LevelMaker> {
 
   #region Fields
 
-  private static LevelMaker levelMaker;
   private PiecePool piecePool;
   private Level level;
 
   private List<GameObject> levelPieces;
-
-  #endregion
-
-  #region Singleton Pattern
-
-  public static LevelMaker Instance {
-    get {
-      if (!levelMaker) {
-        levelMaker = FindObjectOfType(typeof(LevelMaker)) as LevelMaker;
-        if (!levelMaker)
-          Debug.LogError("There needs to be one active LevelMaker script on a GameObject in the scene.");
-      }
-      return levelMaker;
-    }
-  }
 
   #endregion
 
