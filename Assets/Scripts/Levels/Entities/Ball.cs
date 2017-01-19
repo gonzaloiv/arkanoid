@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour {
     renderer = GetComponent<Renderer>(); 
   }
 
-  void Start() {
+  void OnEnable() {
     gameObject.transform.position = Config.BallInitialPosition;
     direction = Config.BallInitialDirection;
     rigidBody.velocity = direction * Config.BallInitialVelocity;
@@ -28,7 +28,7 @@ public class Ball : MonoBehaviour {
 
   void OnCollisionEnter(Collision collision) {
     if (collision.gameObject.name == "BorderBottom") {
-      EventManager.Instance.TriggerEvent(new PaddleMiss());
+      EventManager.TriggerEvent(new PaddleMiss());
       StartCoroutine(Respawn());
     }
     if (collision.gameObject.name != "Ground") { 
@@ -46,7 +46,7 @@ public class Ball : MonoBehaviour {
     rigidBody.velocity = direction * Config.BallInitialVelocity;
 
     float endTime = Time.time + .6f;
-    while(Time.time < endTime){
+    while (Time.time < endTime) {
       renderer.enabled = false;
       yield return new WaitForSeconds(.1f);
       renderer.enabled = true;

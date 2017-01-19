@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
 
 #region Game Events
 
 public class StartGame : UnityEvent {}
 public class GameOver : UnityEvent {}
+public class EndGame : UnityEvent {}
 
 #endregion
 

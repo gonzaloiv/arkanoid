@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class GameOverScreen : MonoBehaviour, IPointerClickHandler {
+public class GameWinScreen : MonoBehaviour, IPointerClickHandler {
 
   #region IPointerClickHandler Implementation
 

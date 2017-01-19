@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour {
+public class LevelHUD : MonoBehaviour {
 
   #region Fields
 
@@ -17,11 +17,11 @@ public class HUD : MonoBehaviour {
   }
 
   void OnEnable() {
-    EventManager.Instance.StartListening<PaddleMiss>(UpdateLivesLabel);
+    EventManager.StartListening<PaddleMiss>(UpdateLivesLabel);
   }
 
   void OnDisable() {
-    EventManager.Instance.StopListening<PaddleMiss>(UpdateLivesLabel);
+    EventManager.StopListening<PaddleMiss>(UpdateLivesLabel);
   }
 
   #endregion

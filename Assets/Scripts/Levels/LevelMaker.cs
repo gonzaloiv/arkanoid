@@ -9,9 +9,13 @@ public class LevelMaker : Singleton<LevelMaker> {
   #region Fields
 
   private PiecePool piecePool;
-  private Level level;
-
   private List<GameObject> levelPieces;
+  private Dictionary<PieceType, float> levelPiecesByType = new Dictionary<PieceType, float>  {
+    {PieceType.None, 0},
+    {PieceType.OneHitPiece, Config.MinPieceAmount / 3},
+    {PieceType.TwoHitPiece, Config.MinPieceAmount / 12},
+    {PieceType.NoHitsPiece, Config.MinPieceAmount / 14}
+  };
 
   #endregion
 
@@ -19,24 +23,24 @@ public class LevelMaker : Singleton<LevelMaker> {
 
   void Awake() {
     piecePool = GetComponent<PiecePool>();
-    level = GetComponent<Level>();
   }
 
   #endregion
 
   #region Public Behaviour
 
-  public List<GameObject> GenerateNewLevel() {
+  public List<GameObject> GenerateNewLevel(int levelNumber) {
     levelPieces = new List<GameObject>();
-    int levelPieceAmount = LevelPieceAmount();
+    IncreaseLevelPieceAmount();
+
     Vector3 position;
-
-    for (int i = 0; i < levelPieceAmount / 2; i++) {
-      position = GetSpawnPiecePosition();
-      levelPieces.Add(SpawnPiece(position));
-      levelPieces.Add(SpawnPiece(new Vector3(-position.x, 0, position.z)));
+    foreach (PieceType pieceType in levelPiecesByType.Keys) {
+      for (int i = 0; i < Mathf.Round(levelPiecesByType[pieceType]); i++) {
+        position = GetSpawnPiecePosition();
+        levelPieces.Add(SpawnPiece(position, pieceType));
+        levelPieces.Add(SpawnPiece(new Vector3(-position.x, 0, position.z), pieceType));
+      }
     }
-
     return levelPieces;
   }
 
@@ -49,11 +53,12 @@ public class LevelMaker : Singleton<LevelMaker> {
     return levelPieces;
   }
 
-  public GameObject SpawnPiece(Vector3 position) {
+  public GameObject SpawnPiece(Vector3 position, PieceType pieceType = PieceType.None) {
     GameObject piece = piecePool.PopPiece();
     piece.transform.position = position;
+    piece.GetComponent<Piece>().PieceType = pieceType == PieceType.None ? PieceType.OneHitPiece : pieceType;
     piece.SetActive(true);
-    
+
     return piece; 
   }
 
@@ -61,18 +66,19 @@ public class LevelMaker : Singleton<LevelMaker> {
 
   #region Private Behaviour
 
-  private int LevelPieceAmount() {
-    int levelPieceAmount = Config.MinPieceAmount + level.LevelNumber;
-    return levelPieceAmount < Config.MaxPieceAmount ? levelPieceAmount : Config.MaxPieceAmount;
+  private void IncreaseLevelPieceAmount() {
+    levelPiecesByType[PieceType.OneHitPiece] += 1;
+    levelPiecesByType[PieceType.TwoHitPiece] += .5f;
+    levelPiecesByType[PieceType.NoHitsPiece] += .5f;
   }
-
+ 
   private Vector3 GetSpawnPiecePosition() {
     Vector3 position = RandomBoardPosition();
     float startTime = Time.realtimeSinceStartup;
     while (!IsEmptyPosition(position)) {
       position = RandomBoardPosition();
-      // TODO: mirar como mejorar esto
-      if (Time.realtimeSinceStartup - startTime > 0.001f) {
+      // TODO: mejorar esto con una clase auxiliar para gestionar el tiempo
+      if (Time.realtimeSinceStartup - startTime > .01f) {
         return Vector3.zero;
       }
     }
@@ -81,7 +87,7 @@ public class LevelMaker : Singleton<LevelMaker> {
 
   private Vector3 RandomBoardPosition() {
     Vector3 position = new Vector3();
-    position.x = Config.SpawnPieceGridOrigin.x + Random.Range(0, Config.HorizontalMaxPieces / 2) * Config.PieceSize.x;
+    position.x = Config.SpawnPieceGridOrigin.x + Random.Range(0, Config.HorizontalMaxPieces) * Config.PieceSize.x;
     position.z = Config.SpawnPieceGridOrigin.z + Random.Range(0, Config.VerticalMaxPieces) * Config.PieceSize.z;
     
     return position;

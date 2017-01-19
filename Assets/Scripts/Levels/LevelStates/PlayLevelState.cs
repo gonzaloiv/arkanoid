@@ -17,18 +17,24 @@ public class PlayLevelState : LevelState {
 
   #endregion
 
-  #region State Behaviour
+  #region Mono Behaviour
 
-  void Awake() {
+  protected override void Awake() {
+    base.Awake();
+    
     ball = Utils.InstantiateAsChild(ballPrefab, transform, false);
     levelHUD = Utils.InstantiateAsChild(levelHUDPrefab, transform, false);
     levelPieces = new List<GameObject>();
   }
 
+  #endregion
+
+  #region State Behaviour
+
   public override void Enter() {
     base.Enter();
 
-    levelPieces = LevelMaker.Instance.GenerateNewLevel();
+    levelPieces = LevelMaker.Instance.GenerateNewLevel(LevelNumber);
     ball.SetActive(true);
     levelHUD.SetActive(true);
   }
@@ -44,11 +50,11 @@ public class PlayLevelState : LevelState {
   }
 
   protected override void AddListeners() {
-    EventManager.Instance.StartListening<PieceHit>(CheckLevelEnd);
+    EventManager.StartListening<PieceHit>(CheckLevelEnd);
   }
 
   protected override void RemoveListeners() {
-    EventManager.Instance.StopListening<PieceHit>(CheckLevelEnd);
+    EventManager.StopListening<PieceHit>(CheckLevelEnd);
   }
 
   #endregion
@@ -57,10 +63,10 @@ public class PlayLevelState : LevelState {
 
   private void CheckLevelEnd() {
     foreach (GameObject piece in levelPieces) {
-      if (piece.activeInHierarchy)
+      if (piece.activeInHierarchy && piece.GetComponent<Piece>().PieceType != PieceType.NoHitsPiece)
         return;
     }
-    EventManager.Instance.TriggerEvent(new EndLevel());
+    EventManager.TriggerEvent(new EndLevel());
   }
 
   #endregion

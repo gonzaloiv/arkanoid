@@ -13,28 +13,16 @@ public class Game : StateMachine {
   }
 
   void OnEnable() {
-    EventManager.Instance.StartListening<StartGame>(ToLevelGameState);
-    EventManager.Instance.StartListening<GameOver>(ToGameOverState);
+    EventManager.StartListening<StartGame>(ChangeState<LevelGameState>);
+    EventManager.StartListening<GameOver>(ChangeState<GameOverState>);
+    EventManager.StartListening<EndGame>(ChangeState<GameWinState>);
+
   }
 
   void OnDisable() {
-    EventManager.Instance.StopListening<StartGame>(ToLevelGameState);
-    EventManager.Instance.StopListening<GameOver>(ToGameOverState);
-  }
-
-  #endregion
-
-  #region Private Behaviour
-
-  private void ToLevelGameState() {
-    if (CurrentState is OpeningGameState || CurrentState is GameOverState)
-      ChangeState<LevelGameState>();
-  }
-
-  private void ToGameOverState() {
-    if (CurrentState is LevelGameState) {
-      ChangeState<GameOverState>();
-    }
+    EventManager.StopListening<StartGame>(ChangeState<LevelGameState>);
+    EventManager.StopListening<GameOver>(ChangeState<GameOverState>);
+    EventManager.StopListening<EndGame>(ChangeState<GameWinState>);
   }
 
   #endregion

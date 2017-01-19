@@ -31,13 +31,13 @@ public class Level : StateMachine {
   }
 
   void OnEnable() {
-    EventManager.Instance.StartListening<NextLevel>(ToPlayLevelState);
-    EventManager.Instance.StartListening<EndLevel>(ToNextLevelState);
+    EventManager.StartListening<NextLevel>(ToPlayLevelState);
+    EventManager.StartListening<EndLevel>(ToNextLevelState);
   }
 
   void OnDisable() {
-    EventManager.Instance.StopListening<NextLevel>(ToPlayLevelState);
-    EventManager.Instance.StopListening<EndLevel>(ToNextLevelState);
+    EventManager.StopListening<NextLevel>(ToPlayLevelState);
+    EventManager.StopListening<EndLevel>(ToNextLevelState);
   }
 
   #endregion
@@ -51,8 +51,9 @@ public class Level : StateMachine {
 
   private void ToNextLevelState() {
     if (CurrentState is PlayLevelState) {
-      // TODO: evento para fin de juego en caso de superar el máximo de niveles
-      levelNumber = levelNumber < Config.MaxLevelNumber ? levelNumber += 1 : levelNumber += 1;
+      levelNumber += 1; 
+      if(levelNumber > Config.MaxLevelNumber)
+        EventManager.TriggerEvent(new EndGame());
       ChangeState<NextLevelState>();
     }
   }

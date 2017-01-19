@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Config {
 
@@ -19,16 +20,29 @@ public class Config {
   public const int InitialPaddleLives = 3;
 
   // Level generation
-  public const int MaxLevelNumber = 30;
+  public const int MaxLevelNumber = 10;
 
   public static Vector3 SpawnPieceGridOrigin = new Vector3(-14, 0, -6); // bottom left
-  public static Vector3 PieceSize = new Vector3(4, 0, .75f);
+  public static Vector3 PieceSize = new Vector3(2, 0, .75f);
   public const int HorizontalMaxPieces = 8;
   public const int VerticalMaxPieces = 32;
 
-  public const int MinPieceAmount = 40;
-  public const int MaxPieceAmount = 64;
+  public const int MinPieceAmount = 20;
+  public const int MaxPieceAmount = 150;
+
+  // Piece generation
+  public static Dictionary<PieceType, Color> PieceColors = new Dictionary<PieceType, Color>() {
+    {PieceType.None, Color.clear},
+    {PieceType.OneHitPiece, Color.black},
+    {PieceType.TwoHitPiece, Color.grey},
+    {PieceType.NoHitsPiece, Color.red}
+  };
 
 }
 
-
+public enum PieceType {
+  None,
+  OneHitPiece,
+  TwoHitPiece,
+  NoHitsPiece
+}
