@@ -16,7 +16,7 @@ public class LevelGameState : State {
   public override void Enter() {
     base.Enter();
 
-    level = Utils.InstantiateAsChild(levelPrefab, transform) as GameObject;
+    level = Instantiate(levelPrefab, transform) as GameObject;
   }
 
   public override void Exit() {

@@ -37,7 +37,8 @@ public class NextLevelState : LevelState {
   #region Private Behaviour
 
   private void InitializeNextLevelScreenPrefab() {
-    nextLevelScreen = Utils.InstantiateAsChild(nextLevelScreenPrefab, transform, false);
+    nextLevelScreen = Instantiate(nextLevelScreenPrefab, transform) as GameObject;
+    nextLevelScreen.SetActive(false);
     nextLevelScreenLabel = nextLevelScreen.transform.GetComponentInChildren<Text>();
     nextLevelScreenLabelText = nextLevelScreenLabel.text;
   }

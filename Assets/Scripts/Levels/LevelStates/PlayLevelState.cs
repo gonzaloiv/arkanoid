@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(PiecePool))]
+[RequireComponent(typeof(LevelMaker))]
 public class PlayLevelState : LevelState {
 
   #region Fields
@@ -22,8 +22,11 @@ public class PlayLevelState : LevelState {
   protected override void Awake() {
     base.Awake();
     
-    ball = Utils.InstantiateAsChild(ballPrefab, transform, false);
-    levelHUD = Utils.InstantiateAsChild(levelHUDPrefab, transform, false);
+    ball = Instantiate(ballPrefab, transform) as GameObject;
+    ball.SetActive(false);
+    levelHUD = Instantiate(levelHUDPrefab, transform) as GameObject;
+    levelHUD.SetActive(false);
+
     levelPieces = new List<GameObject>();
   }
 

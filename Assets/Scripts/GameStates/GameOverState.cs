@@ -14,7 +14,8 @@ public class GameOverState : State {
   #region Mono Behaviour
 
   void Awake() {
-    gameOverScreen = Utils.InstantiateAsChild(gameOverScreenPrefab, transform, false) as GameObject;
+    gameOverScreen = Instantiate(gameOverScreenPrefab, transform) as GameObject;
+    gameOverScreen.SetActive(false);
   }
 
   #endregion

@@ -14,7 +14,8 @@ public class OpeningGameState : State {
   #region Mono Behaviour
 
   void Awake() {
-    openingScreen = Utils.InstantiateAsChild(openingScreenPrefab, transform, false) as GameObject;
+    openingScreen = Instantiate(openingScreenPrefab, transform) as GameObject;
+    openingScreen.SetActive(false);
   }
 
   #endregion

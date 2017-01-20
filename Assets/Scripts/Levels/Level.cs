@@ -22,8 +22,8 @@ public class Level : StateMachine {
   #region Mono Behaviour
 
   void Awake() {
-    Utils.InstantiateAsChild(boardPrefab, transform);
-    Utils.InstantiateAsChild(paddlePrefab, transform);
+    Instantiate(boardPrefab, transform);
+    Instantiate(paddlePrefab, transform);
   }
 
   void Start() {

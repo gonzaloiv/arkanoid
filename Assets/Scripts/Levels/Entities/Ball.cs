@@ -45,6 +45,7 @@ public class Ball : MonoBehaviour {
     gameObject.transform.position = Config.BallInitialPosition;
     rigidBody.velocity = direction * Config.BallInitialVelocity;
 
+    //TODO: mejorar esto con una clase reloj
     float endTime = Time.time + .6f;
     while (Time.time < endTime) {
       renderer.enabled = false;

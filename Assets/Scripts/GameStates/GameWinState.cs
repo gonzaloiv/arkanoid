@@ -14,7 +14,8 @@ public class GameWinState : State {
   #region Mono Behaviour
 
   void Awake() {
-    gameWinScreen = Utils.InstantiateAsChild(gameWinScreenPrefab, transform, false) as GameObject;
+    gameWinScreen = Instantiate(gameWinScreenPrefab, transform) as GameObject;
+    gameWinScreen.SetActive(false); 
   }
 
   #endregion

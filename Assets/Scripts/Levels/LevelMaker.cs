@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(PiecePool))]
 [RequireComponent(typeof(Level))]
 public class LevelMaker : Singleton<LevelMaker> {
 
   #region Fields
 
-  private PiecePool piecePool;
+  [SerializeField] private GameObject piecePrefab;
+  private GameObjectPool piecePool;
   private List<GameObject> levelPieces;
   private Dictionary<PieceType, float> levelPiecesByType = new Dictionary<PieceType, float>  {
     {PieceType.None, 0},
@@ -22,7 +22,7 @@ public class LevelMaker : Singleton<LevelMaker> {
   #region Mono Behaviour
 
   void Awake() {
-    piecePool = GetComponent<PiecePool>();
+    piecePool = PoolManager.Instance.CreateGameObjectPool(piecePrefab, Config.InitialPiecePoolAmount);
   }
 
   #endregion
@@ -54,7 +54,7 @@ public class LevelMaker : Singleton<LevelMaker> {
   }
 
   public GameObject SpawnPiece(Vector3 position, PieceType pieceType = PieceType.None) {
-    GameObject piece = piecePool.PopPiece();
+    GameObject piece = piecePool.PopObject();
     piece.transform.position = position;
     piece.GetComponent<Piece>().PieceType = pieceType == PieceType.None ? PieceType.OneHitPiece : pieceType;
     piece.SetActive(true);
@@ -77,7 +77,7 @@ public class LevelMaker : Singleton<LevelMaker> {
     float startTime = Time.realtimeSinceStartup;
     while (!IsEmptyPosition(position)) {
       position = RandomBoardPosition();
-      // TODO: mejorar esto con una clase auxiliar para gestionar el tiempo
+      // TODO: mejorar esto con una clase reloj
       if (Time.realtimeSinceStartup - startTime > .01f) {
         return Vector3.zero;
       }
