@@ -7,31 +7,45 @@ public class Piece : MonoBehaviour {
 
   #region Fields
 
-  public PieceType PieceType { get { return pieceType; } set { pieceType = value; } }
+  public PieceInfo PieceInfo { get { return pieceInfo; } set { pieceInfo = value; } }
+  public PieceType PieceType { get { return pieceInfo.type; } }
 
-  private PieceType pieceType;
+  private PieceInfo pieceInfo;
   private Material material;
 
   #endregion
 
   #region Mono Behaviour
 
+  void Awake() {
+    material = GetComponent<Renderer>().material;
+  }
+
   void OnEnable() {
-    GetComponent<Renderer>().material.color = Config.PieceColors[pieceType];
+    SetPieceColor();
   }
 
   void OnCollisionEnter(Collision collision) {
-    switch (pieceType) {
+    switch (pieceInfo.type) {
       case PieceType.OneHitPiece:
         gameObject.SetActive(false);
         EventManager.TriggerEvent(new PieceHit());
         break;
       case PieceType.TwoHitPiece:
-        pieceType = PieceType.OneHitPiece;
+        pieceInfo.type = PieceType.OneHitPiece;
+        SetPieceColor();
         break;
       case PieceType.NoHitsPiece:
         break;
     }
+  }
+
+  #endregion
+
+  #region Mono Behaviour
+
+  private void SetPieceColor() {
+    material.color = pieceInfo.color;
   }
 
   #endregion

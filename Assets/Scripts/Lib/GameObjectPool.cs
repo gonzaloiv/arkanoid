@@ -9,13 +9,16 @@ public class GameObjectPool {
   private List<GameObject> objects = new List<GameObject>();
   private int initialObjectAmount;
   private GameObject prefab;
+  GameObject poolGameObject;
 
   #endregion
 
   #region Contructors
 
-  public GameObjectPool(GameObject prefab, int initialObjectAmount) {
+  public GameObjectPool(GameObject prefab, int initialObjectAmount, Transform parent) {
     this.prefab = prefab;
+    poolGameObject = new GameObject(prefab.name + "Pool");
+    poolGameObject.transform.parent = parent;
     for(int i = 0; i < initialObjectAmount; i++)
       PushObject(); 
   }
@@ -33,7 +36,7 @@ public class GameObjectPool {
   }
  
   public GameObject PushObject() {
-    GameObject obj = PoolManager.Instance.CreatePoolGameObject(prefab);
+    GameObject obj = Pooler.CreatePoolGameObject(prefab, poolGameObject.transform);
     obj.SetActive(false);
     objects.Add(obj);
 

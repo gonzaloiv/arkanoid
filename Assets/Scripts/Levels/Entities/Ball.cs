@@ -26,6 +26,10 @@ public class Ball : MonoBehaviour {
     rigidBody.velocity = direction * Config.BallInitialVelocity;
   }
 
+  protected void LateUpdate() {
+    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, transform.localEulerAngles.z);
+  }
+
   void OnCollisionEnter(Collision collision) {
     if (collision.gameObject.name == "BorderBottom") {
       EventManager.TriggerEvent(new PaddleMiss());

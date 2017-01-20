@@ -8,7 +8,7 @@ An Arkanoid clone in Unity.
 
 ## Usage
 
-Drag the game prefab into the Unity scene and play.
+Open Game scene and play.
 
 ## To do
 

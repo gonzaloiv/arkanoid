@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Levels {
+public class LevelConfig {
 
-  public static Color[] PieceColors = new Color[] { Color.blue, Color.green, Color.red, Color.yellow, Color.black };
- 
   // Test Level
   public static int[][] TestLevel = new int[][] {
     new int[] { 0, 0, 0 }
@@ -21,6 +20,39 @@ public class Levels {
     new int[] { -12, 12, 3 }, new int[] { -4, 12, 3 }, new int[] { 4, 12, 3 }, new int[] { 12, 12, 3 },
     new int[] { -12, 14, 4 }, new int[] { -4, 14, 4 }, new int[] { 4, 14, 4 }, new int[] { 12, 14, 4 }
   };
- 
+
+  /// Level generation
+  public static Dictionary<PieceType, PieceInfo> PieceTypes = new Dictionary<PieceType, PieceInfo>() {
+    { PieceType.OneHitPiece, new PieceInfo(PieceType.OneHitPiece, Color.green, 10, 1) },
+    { PieceType.TwoHitPiece, new PieceInfo(PieceType.TwoHitPiece, Color.magenta, 2, .5f) },
+    { PieceType.NoHitsPiece, new PieceInfo(PieceType.NoHitsPiece, Color.cyan, 2, .3f) }
+  };
+
 }
 
+public enum PieceType {
+  None,
+  OneHitPiece,
+  TwoHitPiece,
+  NoHitsPiece
+}
+
+public struct PieceInfo {
+
+  public PieceType type;
+  public Color color;
+  public float amount;
+  public float increaseAmount;
+
+  public PieceInfo(PieceType type, Color color, float initialAmount, float increaseAmount) {
+    this.type = type;
+    this.color = color;
+    this.amount = initialAmount;
+    this.increaseAmount = increaseAmount;
+  }
+
+  public void IncreaseAmount(){
+    this.amount += increaseAmount;
+  }
+
+}
