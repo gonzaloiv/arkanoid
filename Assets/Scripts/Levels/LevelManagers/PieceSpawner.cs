@@ -46,7 +46,6 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     float startTime = Time.realtimeSinceStartup;
     while (!IsEmptyPosition(position)) {
       position = RandomBoardPosition();
-      // TODO: mejorar esto con una clase reloj
       if (Time.realtimeSinceStartup - startTime > .01f) {
         return Vector3.zero;
       }

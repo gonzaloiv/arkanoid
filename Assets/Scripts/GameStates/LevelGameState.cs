@@ -16,13 +16,15 @@ public class LevelGameState : State {
   public override void Enter() {
     base.Enter();
 
-    level = Instantiate(levelPrefab, transform) as GameObject;
+    if (!level) 
+      level = Instantiate(levelPrefab, transform) as GameObject;
+    level.SetActive(true);
   }
 
   public override void Exit() {
     base.Exit();
 
-    Destroy(level);
+    level.SetActive(false);
   }
 
   #endregion

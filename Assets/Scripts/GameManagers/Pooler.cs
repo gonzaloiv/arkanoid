@@ -17,7 +17,11 @@ public class Pooler : Singleton<Pooler> {
   }
 
   public static GameObjectPool CreateGameObjectPool(string poolName, GameObject prefab, int initialObjectAmount, Transform parent) {
-    GameObjectPool gameObjectPool = new GameObjectPool(prefab, initialObjectAmount, parent);
+    GameObjectPool gameObjectPool = GetPoolByName(poolName);
+    if(gameObjectPool != null)
+      return gameObjectPool;
+
+    gameObjectPool = new GameObjectPool(prefab, initialObjectAmount, parent);
     Instance.pools.Add(poolName, gameObjectPool);
    
     return gameObjectPool;

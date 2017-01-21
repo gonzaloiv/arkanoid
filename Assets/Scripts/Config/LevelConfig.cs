@@ -24,8 +24,8 @@ public class LevelConfig {
   /// Level generation
   public static Dictionary<PieceType, PieceInfo> PieceTypes = new Dictionary<PieceType, PieceInfo>() {
     { PieceType.OneHitPiece, new PieceInfo(PieceType.OneHitPiece, Color.green, 10, 1) },
-    { PieceType.TwoHitPiece, new PieceInfo(PieceType.TwoHitPiece, Color.magenta, 2, .5f) },
-    { PieceType.NoHitsPiece, new PieceInfo(PieceType.NoHitsPiece, Color.cyan, 2, .3f) }
+    { PieceType.TwoHitPiece, new PieceInfo(PieceType.TwoHitPiece, Color.magenta, 2, 1) },
+    { PieceType.NoHitsPiece, new PieceInfo(PieceType.NoHitsPiece, Color.cyan, 2, .5f) }
   };
 
 }
@@ -37,7 +37,7 @@ public enum PieceType {
   NoHitsPiece
 }
 
-public struct PieceInfo {
+public class PieceInfo {
 
   public PieceType type;
   public Color color;
@@ -49,10 +49,6 @@ public struct PieceInfo {
     this.color = color;
     this.amount = initialAmount;
     this.increaseAmount = increaseAmount;
-  }
-
-  public void IncreaseAmount(){
-    this.amount += increaseAmount;
   }
 
 }

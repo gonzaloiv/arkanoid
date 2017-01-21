@@ -15,7 +15,8 @@ public class Level : StateMachine {
   private GameObject paddle;
 
   public int LevelNumber { get { return levelNumber; } }
-  private int levelNumber = 1;
+
+  private int levelNumber;
 
   #endregion
 
@@ -33,6 +34,9 @@ public class Level : StateMachine {
   void OnEnable() {
     EventManager.StartListening<NextLevel>(ToPlayLevelState);
     EventManager.StartListening<EndLevel>(ToNextLevelState);
+
+    levelNumber = 1;
+    ToPlayLevelState();
   }
 
   void OnDisable() {
@@ -52,7 +56,7 @@ public class Level : StateMachine {
   private void ToNextLevelState() {
     if (CurrentState is PlayLevelState) {
       levelNumber += 1; 
-      if(levelNumber > Config.MaxLevelNumber)
+      if (levelNumber > Config.MaxLevelNumber)
         EventManager.TriggerEvent(new EndGame());
       ChangeState<NextLevelState>();
     }

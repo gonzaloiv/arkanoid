@@ -7,7 +7,6 @@ public class GameObjectPool {
   #region Fields
 
   private List<GameObject> objects = new List<GameObject>();
-  private int initialObjectAmount;
   private GameObject prefab;
   GameObject poolGameObject;
 

@@ -8,7 +8,7 @@ public class Ball : MonoBehaviour {
   #region Fields
 
   private Rigidbody rigidBody;
-  private Renderer renderer;
+  private Animator animator;
   private Vector3 direction;
 
   #endregion
@@ -17,27 +17,30 @@ public class Ball : MonoBehaviour {
 
   void Awake() {
     rigidBody = GetComponent<Rigidbody>(); 
-    renderer = GetComponent<Renderer>(); 
+    animator =  GetComponent<Animator>();
   }
 
+  // EXPLANATION : ball.setActive(true) -misteriously- doesn't always trigger OnEnable()...
   void OnEnable() {
-    gameObject.transform.position = Config.BallInitialPosition;
-    direction = Config.BallInitialDirection;
-    rigidBody.velocity = direction * Config.BallInitialVelocity;
+    Reset();
   }
 
-  protected void LateUpdate() {
-    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, transform.localEulerAngles.z);
+  void OnDisable() {
+    Reset();
   }
 
   void OnCollisionEnter(Collision collision) {
-    if (collision.gameObject.name == "BorderBottom") {
-      EventManager.TriggerEvent(new PaddleMiss());
-      StartCoroutine(Respawn());
-    }
     if (collision.gameObject.name != "Ground") { 
       direction = Vector3.Reflect(direction, collision.contacts[0].normal);
       rigidBody.velocity = direction * Config.BallInitialVelocity;
+    }
+  } 
+
+  void OnTriggerEnter(Collider collider) {
+    if (collider.name == "BorderBottom") {
+      EventManager.TriggerEvent(new PaddleMiss());
+      SetInitialPosition();
+      animator.Play("Blink");
     }
   }
 
@@ -45,18 +48,15 @@ public class Ball : MonoBehaviour {
 
   #region Mono Behaviour
 
-  private IEnumerator Respawn() {
-    gameObject.transform.position = Config.BallInitialPosition;
+  private void Reset() {
+    SetInitialPosition();
+    direction = Config.BallInitialDirection;
     rigidBody.velocity = direction * Config.BallInitialVelocity;
+  }
 
-    //TODO: mejorar esto con una clase reloj
-    float endTime = Time.time + .6f;
-    while (Time.time < endTime) {
-      renderer.enabled = false;
-      yield return new WaitForSeconds(.1f);
-      renderer.enabled = true;
-      yield return new WaitForSeconds(.1f);
-    }
+  private void SetInitialPosition() {
+    gameObject.transform.position = Config.BallInitialPosition;
+    rigidBody.velocity = Vector3.zero;
   }
 
   #endregion

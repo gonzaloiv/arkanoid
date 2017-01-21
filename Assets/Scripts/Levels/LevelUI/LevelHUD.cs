@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -7,16 +8,21 @@ public class LevelHUD : MonoBehaviour {
   #region Fields
 
   private Text remainingLivesLabel;
-  private string remainingLivesLabelText;
+  private string remainingLivesLabelText = "Lives: ";
+  private int paddleLives;
 
   #endregion
 
   #region Mono Behaviour
+
   void Awake() {
     remainingLivesLabel = gameObject.transform.GetComponentInChildren<Text>();
   }
 
   void OnEnable() {
+    paddleLives = Config.InitialPaddleLives;
+    remainingLivesLabel.text  = remainingLivesLabelText + paddleLives;
+
     EventManager.StartListening<PaddleMiss>(UpdateLivesLabel);
   }
 
@@ -29,8 +35,8 @@ public class LevelHUD : MonoBehaviour {
   #region Mono Behaviour
 
   private void UpdateLivesLabel() {
-    remainingLivesLabelText = remainingLivesLabel.text;
-    remainingLivesLabel.text = remainingLivesLabelText.Substring(0, remainingLivesLabelText.Length - 1);
+    paddleLives--;
+    remainingLivesLabel.text = remainingLivesLabelText + paddleLives;
   }
     
   #endregion

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Config {
 
   public const float BoardWidth = 32;
-  public const float BoardHeight = 27f;
+  public const float BoardHeight = 27;
  
   public const float BallInitialVelocity = 35f;
   public static Vector3 BallInitialPosition = new Vector3(0, .5f, -16);
@@ -22,6 +22,6 @@ public class Config {
   public const int MaxLevelNumber = 10;
 
   public static Vector3 PieceSize = new Vector3(4, 1, 1.5f);
-  public static Vector3 SpawnPieceGridOrigin = new Vector3(-BoardWidth / 2 - PieceSize.x / 2, 0, -PieceSize.z * 4); // bottom left
+  public static Vector3 SpawnPieceGridOrigin = new Vector3(-BoardWidth / 2 - PieceSize.x / 2, 0, -PieceSize.z * 4.5f); // bottom left
 
 }

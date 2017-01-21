@@ -38,14 +38,15 @@ public class Piece : MonoBehaviour {
       case PieceType.NoHitsPiece:
         break;
     }
-  }
+  } 
 
   #endregion
 
   #region Mono Behaviour
 
   private void SetPieceColor() {
-    material.color = pieceInfo.color;
+    if(pieceInfo != null)
+      material.color = pieceInfo.color;
   }
 
   #endregion

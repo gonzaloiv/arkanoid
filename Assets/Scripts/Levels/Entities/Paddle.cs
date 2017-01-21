@@ -13,6 +13,7 @@ public class Paddle : MonoBehaviour {
   #region Mono Behaviour
 
   void OnEnable() {
+    lives = Config.InitialPaddleLives;
     EventManager.StartListening<MovePaddleLeft>(MoveLeft);
     EventManager.StartListening<MovePaddleRight>(MoveRight);
     EventManager.StartListening<PaddleMiss>(LoseOneLife);

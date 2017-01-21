@@ -37,9 +37,9 @@ public class PlayLevelState : LevelState {
   public override void Enter() {
     base.Enter();
 
-    levelPieces = LevelMaker.Instance.GenerateNewLevel(LevelNumber);
     ball.SetActive(true);
     levelHUD.SetActive(true);
+    levelPieces = LevelMaker.GenerateNewLevel(LevelNumber);
   }
 
   public override void Exit() {
@@ -65,7 +65,7 @@ public class PlayLevelState : LevelState {
   #region Private Behaviour
 
   private void CheckLevelEnd() {
-    foreach (GameObject piece in levelPieces) {
+    foreach (GameObject piece in LevelMaker.LevelPieces) {
       if (piece.activeInHierarchy && piece.GetComponent<Piece>().PieceType != PieceType.NoHitsPiece)
         return;
     }
