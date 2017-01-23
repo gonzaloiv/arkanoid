@@ -15,7 +15,7 @@ public class Config {
 
   public const float MouseThreshold = 1.5f;
 
-  public const int InitialPiecePoolAmount = 20;
+  public const int InitialPiecePoolAmount = 50;
 
   public const int InitialPaddleLives = 3;
 

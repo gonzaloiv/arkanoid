@@ -21,7 +21,6 @@ public class PlayLevelState : LevelState {
 
   protected override void Awake() {
     base.Awake();
-    
     ball = Instantiate(ballPrefab, transform) as GameObject;
     ball.SetActive(false);
     levelHUD = Instantiate(levelHUDPrefab, transform) as GameObject;

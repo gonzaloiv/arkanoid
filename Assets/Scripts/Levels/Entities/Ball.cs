@@ -20,20 +20,15 @@ public class Ball : MonoBehaviour {
     animator =  GetComponent<Animator>();
   }
 
-  // EXPLANATION : ball.setActive(true) -misteriously- doesn't always trigger OnEnable()...
   void OnEnable() {
     Reset();
   }
 
-  void OnDisable() {
-    Reset();
-  }
-
   void OnCollisionEnter(Collision collision) {
-    if (collision.gameObject.name != "Ground") { 
-      direction = Vector3.Reflect(direction, collision.contacts[0].normal);
-      rigidBody.velocity = direction * Config.BallInitialVelocity;
-    }
+    direction = Vector3.Reflect(direction, collision.contacts[0].normal);
+    rigidBody.velocity = direction * Config.BallInitialVelocity;
+    EventManager.TriggerEvent(new BallHit());
+    animator.Play("Hit");
   } 
 
   void OnTriggerEnter(Collider collider) {

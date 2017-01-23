@@ -15,7 +15,6 @@ public class Level : StateMachine {
   private GameObject paddle;
 
   public int LevelNumber { get { return levelNumber; } }
-
   private int levelNumber;
 
   #endregion
@@ -36,7 +35,7 @@ public class Level : StateMachine {
     EventManager.StartListening<EndLevel>(ToNextLevelState);
 
     levelNumber = 1;
-    ToPlayLevelState();
+    ChangeState<NextLevelState>();
   }
 
   void OnDisable() {

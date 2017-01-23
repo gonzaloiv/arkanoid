@@ -4,7 +4,7 @@ using UnityEngine.Events;
 #region Game Events
 
 // Listeners: Game
-// Triggers: GaemOverScreen, GameWinScreen, OpeningScreen
+// Triggers: GameOverScreen, GameWinScreen, OpeningScreen
 public class StartGame : UnityEvent {}
 
 // Listeners: Game
@@ -46,5 +46,10 @@ public class PaddleMiss : UnityEvent {}
 // Listeners: PlayLevelState
 // Triggers: Piece
 public class PieceHit : UnityEvent {}
+
+// Listeners: SoundManager
+// Triggers: Ball
+public class BallHit : UnityEvent {}
+
 
 #endregion

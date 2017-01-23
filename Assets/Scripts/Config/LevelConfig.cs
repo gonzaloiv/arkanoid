@@ -23,9 +23,9 @@ public class LevelConfig {
 
   /// Level generation
   public static Dictionary<PieceType, PieceInfo> PieceTypes = new Dictionary<PieceType, PieceInfo>() {
-    { PieceType.OneHitPiece, new PieceInfo(PieceType.OneHitPiece, Color.green, 10, 1) },
-    { PieceType.TwoHitPiece, new PieceInfo(PieceType.TwoHitPiece, Color.magenta, 2, 1) },
-    { PieceType.NoHitsPiece, new PieceInfo(PieceType.NoHitsPiece, Color.cyan, 2, .5f) }
+    { PieceType.OneHitPiece, new PieceInfo(PieceType.OneHitPiece, Color.green, 10, 2) },
+    { PieceType.TwoHitPiece, new PieceInfo(PieceType.TwoHitPiece, Color.magenta, 2, 2) },
+    { PieceType.NoHitsPiece, new PieceInfo(PieceType.NoHitsPiece, Color.cyan, 2, 1) }
   };
 
 }

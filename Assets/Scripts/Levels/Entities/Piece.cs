@@ -12,6 +12,7 @@ public class Piece : MonoBehaviour {
 
   private PieceInfo pieceInfo;
   private Material material;
+  private Animator animator;
 
   #endregion
 
@@ -19,6 +20,7 @@ public class Piece : MonoBehaviour {
 
   void Awake() {
     material = GetComponent<Renderer>().material;
+    animator = GetComponent<Animator>();
   }
 
   void OnEnable() {
@@ -28,12 +30,11 @@ public class Piece : MonoBehaviour {
   void OnCollisionEnter(Collision collision) {
     switch (pieceInfo.type) {
       case PieceType.OneHitPiece:
-        gameObject.SetActive(false);
         EventManager.TriggerEvent(new PieceHit());
+        animator.Play("Vanish");
         break;
       case PieceType.TwoHitPiece:
-        pieceInfo.type = PieceType.OneHitPiece;
-        SetPieceColor();
+        ChangePieceType(PieceType.OneHitPiece);
         break;
       case PieceType.NoHitsPiece:
         break;
@@ -44,9 +45,18 @@ public class Piece : MonoBehaviour {
 
   #region Mono Behaviour
 
+  private void ChangePieceType (PieceType pieceType) {
+    pieceInfo = LevelConfig.PieceTypes[pieceType];
+    SetPieceColor();
+  }
+
   private void SetPieceColor() {
     if(pieceInfo != null)
       material.color = pieceInfo.color;
+  }
+
+  private void Disable() {
+    gameObject.SetActive(false);
   }
 
   #endregion

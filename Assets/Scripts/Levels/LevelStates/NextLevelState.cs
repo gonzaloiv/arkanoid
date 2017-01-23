@@ -19,8 +19,7 @@ public class NextLevelState : LevelState {
   public override void Enter() {
     base.Enter();
 
-    if (!nextLevelScreen)
-      InitializeNextLevelScreenPrefab();
+    InitializeNextLevelScreenPrefab();
 
     nextLevelScreenLabel.text = nextLevelScreenLabelText.Substring(0, nextLevelScreenLabelText.Length - 1) + Level.LevelNumber;
     nextLevelScreen.SetActive(true);
