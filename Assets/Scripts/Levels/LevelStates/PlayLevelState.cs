@@ -17,10 +17,10 @@ public class PlayLevelState : LevelState {
 
   #endregion
 
-  #region Mono Behaviour
+  #region State Behaviour
 
-  protected override void Awake() {
-    base.Awake();
+  protected override void Initialize() {
+    base.Initialize();
     ball = Instantiate(ballPrefab, transform) as GameObject;
     ball.SetActive(false);
     levelHUD = Instantiate(levelHUDPrefab, transform) as GameObject;
@@ -28,10 +28,6 @@ public class PlayLevelState : LevelState {
 
     levelPieces = new List<GameObject>();
   }
-
-  #endregion
-
-  #region State Behaviour
 
   public override void Enter() {
     base.Enter();

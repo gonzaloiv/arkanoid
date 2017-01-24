@@ -14,8 +14,14 @@ public abstract class LevelState : State {
 
   #region Mono Behaviour
 
-  protected virtual void Awake() {
+  protected virtual void Initialize() {
     level = GetComponent<Level>();
+  }
+
+  public override void Enter() {
+    base.Enter();
+
+    Initialize();
   }
 
   #endregion
